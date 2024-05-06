@@ -5,11 +5,12 @@ class ListaDeLinea
 {
 public:
     ListaDeLinea();
-    NodoLinea *primerNodoLinea, *ultimaNodoLinea, *ptr;
+    NodoLinea *ptrNodoLinea;
     void aggLinea(char *nombre);
     void eliminarLinea(char *nombre);
     bool petenece(Linea l);
 private:
+    NodoLinea *primerNodoLinea, *ultimaNodoLinea;
     static unsigned short nroLinea;
     void BuscarLinea(char *nombre);
 };

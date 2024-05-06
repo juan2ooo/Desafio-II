@@ -5,13 +5,15 @@
 class Linea
 {
 public:
+    //atributos
     char *nombre;
-    Linea *siguiente;
+    //metodos
     Linea(char *nombre);
 
 private:
+    //atributos
     ListaDeEstacion estaciones;
-    static unsigned short nroEstaciones;
+
 
 };
 

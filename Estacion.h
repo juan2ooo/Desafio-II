@@ -4,8 +4,10 @@
 class Estacion
 {
 public:
+    //atributos
     char *nombre;
-    Estacion(char *nom);
+    //metodos
+    Estacion(char *nombre);
 };
 
 #endif // ESTACION_H

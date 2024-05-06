@@ -16,7 +16,7 @@ public:
 
 private:
     //atributos
-    NodoEst *primeraNodoEst,*ultimoNodoEst;
+    NodoEst *primeraNodoEst,*ultimoNodoEst, *ptrNodoEst;
     static unsigned short nroEstaciones;
 
     //metodos

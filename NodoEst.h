@@ -7,7 +7,7 @@ public:
     NodoEst *siguiente, *anterior;
 
     NodoEst(char *nombreEstacion);
-    Estacion estacion;
+    Estacion *estacion;
 };
 
 #endif // NODOEST_H
