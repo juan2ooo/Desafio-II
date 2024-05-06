@@ -12,10 +12,11 @@ public:
     ~ListaDeEstacion();
 
     //metodos
-    void aggEstacion(const char *nombre,const char *nombreAntes);
-    void eiminarEstacion(const char *nombre);
+    void aggEstacion(NodoEst &est,const char *nombreAntes);
+    void eiminarEstacion(NodoEst &est);
     bool tieneEstacion(Estacion e);
     void imprimirNombresEstaciones();
+    bool estaVacia();
 
 private:
     //atributos

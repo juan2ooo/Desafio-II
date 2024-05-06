@@ -5,43 +5,47 @@ ListaDeEstacion::ListaDeEstacion() {
     ultimoNodoEst = nullptr;
 }
 
-void ListaDeEstacion::aggEstacion(const char *nombre, const char *nombreAntes){
+void ListaDeEstacion::aggEstacion(NodoEst &est, const char *nombreAntes){
     //segundo parametro para insertar el dato antes de ese, por defecto ingresa al final(se ingresa ptr en ese caso)
     if(primerNodoEst == nullptr){ //si esta vacia
-        primerNodoEst = new NodoEst(nombre);
+        primerNodoEst = &est;
         ultimoNodoEst = primerNodoEst;
         primerNodoEst ->siguiente = nullptr;
         primerNodoEst ->anterior = nullptr;
+        nroEstaciones ++;
         return;
     }
 
     if(primerNodoEst->estacion->nombre == nombreAntes){ //si es al principio
-        NodoEst *p = new NodoEst(nombre);
-        p ->siguiente = primerNodoEst;
+        NodoEst *p = &est;
+        p ->siguiente = primerNodoEst;        
         p ->anterior = nullptr;
         primerNodoEst ->anterior = p;
 
         primerNodoEst = p;
+        nroEstaciones ++;
         return;
     }
 
     if(nombreAntes == nullptr){ //si es al final
-        NodoEst *p = new NodoEst(nombre);
+        NodoEst *p = &est;
         p ->anterior = ultimoNodoEst;
         p->siguiente = nullptr;
         ultimoNodoEst ->siguiente = p;
 
         ultimoNodoEst = p;
+        nroEstaciones ++;
         return;
     }
 
 
     NodoEst *nodo = buscarEstacion(nombreAntes);
-    NodoEst *p = new NodoEst(nombre);
+    NodoEst *p = &est;
     p ->anterior = nodo ->anterior;
     p ->siguiente = nodo;
     nodo ->anterior ->siguiente = p;
     nodo ->anterior = p;
+    nroEstaciones ++;
 }
 
 NodoEst *ListaDeEstacion::buscarEstacion(const char *nombre){
@@ -94,3 +98,7 @@ ListaDeEstacion::~ListaDeEstacion(){
     delete ultimoNodoEst;
 }
 
+
+bool ListaDeEstacion::estaVacia(){
+    return primerNodoEst == nullptr;
+}

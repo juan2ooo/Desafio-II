@@ -9,7 +9,8 @@ public:
     char *nombre;
     //metodos
     Linea(char *nombre);
-
+    //bool getEstavacia();
+    bool estaVacia();
 private:
     //atributos
     ListaDeEstacion estaciones;
