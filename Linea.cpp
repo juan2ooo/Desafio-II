@@ -1,3 +1,3 @@
 #include "Linea.h"
 
-Linea::Linea() {}
+Linea::Linea(char *nombreEst) {}

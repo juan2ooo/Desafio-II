@@ -5,9 +5,9 @@ class Estacion
 {
 public:
     //atributos
-    char *nombre;
+    const char *nombre;
     //metodos
-    Estacion(char *nombre);
+    Estacion(const char *nombre);
 };
 
 #endif // ESTACION_H

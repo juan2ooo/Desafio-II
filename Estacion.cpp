@@ -1,3 +1,5 @@
 #include "Estacion.h"
 
-Estacion::Estacion() {}
+Estacion::Estacion(const char *nombre) {
+    this->nombre = nombre;
+}

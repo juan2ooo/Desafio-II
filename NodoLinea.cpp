@@ -1,3 +1,3 @@
 #include "NodoLinea.h"
 
-NodoLinea::NodoLinea() {}
+NodoLinea::NodoLinea(char *nombreEst) {}

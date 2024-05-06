@@ -5,9 +5,9 @@ class NodoEst
 {
 public:
     NodoEst *siguiente, *anterior;
-
-    NodoEst(char *nombreEstacion);
+    NodoEst(const char *nombreEstacion);
     Estacion *estacion;
+    ~NodoEst();
 };
 
 #endif // NODOEST_H
