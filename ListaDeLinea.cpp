@@ -64,3 +64,68 @@ void ListaDeLinea::imprimirNombresLineas() {
 }
 
 
+//void ListaDeLinea::aggEstTrasferencia(const char *nombre, Linea *l1, const char *estAntes1, Linea *l2, const char *estAntes2){
+
+//}
+
+
+const char *ListaDeLinea::nombreEstTransf(const char *nombre, Linea *l1){
+    short min = 20;
+    short i = 0;
+    char *nombreTransferencia = new char[min];
+
+    while(nombre[i] != '\0'){
+        if(i > min - 2){ //si necesito mas memoria, redimensionar
+            min = min + 10;
+            char *temp = new char[min];
+            short j = 0;
+
+            while(nombreTransferencia[j] != '\0'){
+                temp[j] = nombreTransferencia[j];
+            }
+            temp[j] = '\0';
+        }
+
+
+        nombreTransferencia[i] = nombre[i];
+        i++;
+    }
+
+    //short min = 20;
+    short tam = i;
+    i = 0;
+    while(l1 ->nombre[i] != '\0'){
+        char *temp;
+        char *nombreTransferencia;
+
+
+        tam = tam + i;
+        nombreTransferencia[i] = l1 ->nombre[i];
+        nombreTransferencia[tam] = '\0';
+        i++;
+    }
+    //const char *nombreTransferencia1 = &nombreTransferencia[0];
+    return &nombreTransferencia[0];
+
+}
+
+
+const char *ListaDeLinea::redimensionar(const char *nombre){
+    short min = 20;
+    short i = 0;
+    char *nombreTransferencia = new char[min];
+    //si necesito mas memoria, redimensionar
+        min = min + 10;
+        temp = new char[min];
+        short j = 0;
+
+        while(nombreTransferencia[j] != '\0'){
+            temp[j] = nombreTransferencia[j];
+        }
+        temp[j] = '\0';
+        delete[] nombreTransferencia;
+        nombreTransferencia = temp;
+
+}
+
+
