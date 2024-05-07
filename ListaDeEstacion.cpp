@@ -89,6 +89,7 @@ void ListaDeEstacion::imprimirNombresEstaciones() {
     NodoEst *temp = primerNodoEst;
     while (temp != nullptr) {
         // Imprimir el nombre de la estación
+        //cout << temp->estacion->nombre << "----" << temp ->estacion ->sgte << "----";
         cout << temp->estacion->nombre << endl;
         // Moverse al siguiente nodo
         temp = temp->siguiente;
