@@ -6,7 +6,7 @@ class Estacion
 public:
     //atributos
     const char *nombre;
-    unsigned short ant, sgte;
+    float ant, sgte;
     //metodos
     Estacion(const char *nombre);
 

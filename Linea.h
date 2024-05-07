@@ -6,9 +6,9 @@ class Linea
 {
 public:
     //atributos
-    char *nombre;
+    const char *nombre;
     //metodos
-    Linea(char *nombre);
+    Linea(const char *nombre);
     //bool getEstavacia();
     bool estaVacia();
 private:

@@ -6,10 +6,10 @@ class ListaDeLinea
 {
 public:
     ListaDeLinea();
-
     void aggLinea(NodoLinea &l);
     void eliminarLinea(NodoLinea &l);
     bool petenece(Linea &l);
+    void imprimirNombresLineas();
 
 private:
     NodoLinea *primerNodoLinea;

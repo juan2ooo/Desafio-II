@@ -1,6 +1,8 @@
 #include "NodoLinea.h"
 
-NodoLinea::NodoLinea(char *nombreEst) {}
+NodoLinea::NodoLinea(const char *nombreEst) {
+    linea = new Linea(nombreEst);
+}
 
 
 NodoLinea::~NodoLinea(){

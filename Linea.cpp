@@ -1,6 +1,8 @@
 #include "Linea.h"
 
-Linea::Linea(char *nombreEst) {}
+Linea::Linea(const char *nombreEst) {
+    nombre = nombreEst;
+}
 
 
 bool Linea::estaVacia(){

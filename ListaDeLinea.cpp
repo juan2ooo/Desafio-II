@@ -1,6 +1,9 @@
 #include "ListaDeLinea.h"
 
-ListaDeLinea::ListaDeLinea() {}
+ListaDeLinea::ListaDeLinea() {
+
+    primerNodoLinea = nullptr;
+}
 
 
 
@@ -49,6 +52,15 @@ void ListaDeLinea::eliminarLinea(NodoLinea &l){ // elimina al siguiente de este
 
 bool ListaDeLinea::petenece(Linea &l){
     return (buscar(l.nombre) == nullptr);
+}
+
+
+void ListaDeLinea::imprimirNombresLineas() {
+    NodoLinea *actual = primerNodoLinea;
+    while (actual != nullptr) {
+        cout << actual->linea->nombre << endl; // Suponiendo que el atributo se llama 'nombre'
+        actual = actual->siguiente;
+    }
 }
 
 

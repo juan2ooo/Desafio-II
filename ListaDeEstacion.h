@@ -2,6 +2,7 @@
 #define LISTADEESTACION_H
 #include <iostream>
 #include "NodoEst.h"
+#include "Estacion.h"
 using namespace std;
 class ListaDeEstacion
 {
@@ -12,11 +13,13 @@ public:
     ~ListaDeEstacion();
 
     //metodos
-    void aggEstacion(NodoEst &est,const char *nombreAntes);
-    void eiminarEstacion(NodoEst &est);
+    void aggEstacion(NodoEst &est,const char *nombreAntes); //solo ajusta los tiempor cuando se ingresan a estaciones intermedias
+    void eiminarEstacion(const char *s);
     bool tieneEstacion(Estacion e);
     void imprimirNombresEstaciones();
     bool estaVacia();
+    unsigned short getNroEstaciones();
+
 
 private:
     //atributos
@@ -25,6 +28,7 @@ private:
 
     //metodos
     NodoEst *buscarEstacion(const char *nombre);
+    void reajustarTiempos(Estacion *e1, Estacion *e2, bool caso);
 };
 
 #endif // LISTADEESTACION_H
