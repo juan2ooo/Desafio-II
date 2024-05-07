@@ -7,6 +7,7 @@ public:
     NodoLinea *siguiente;
     Linea *linea;
     NodoLinea(char *nombreEst);
+    ~NodoLinea();
 };
 
 #endif // NODOLINEA_H

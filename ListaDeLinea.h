@@ -6,15 +6,18 @@ class ListaDeLinea
 {
 public:
     ListaDeLinea();
-    NodoLinea *ptrNodoLinea;
+
     void aggLinea(NodoLinea &l);
     void eliminarLinea(NodoLinea &l);
-    bool petenece(Linea l);
+    bool petenece(Linea &l);
+
 private:
-    NodoLinea *primerNodoLinea, *ultimoNodoLinea;
+    NodoLinea *primerNodoLinea;
     static unsigned short nroLinea;
-    void BuscarLinea(char *nombre);
+    //void BuscarLinea(char *nombre);
     bool sePuedeEliminar(NodoLinea &l);
+    NodoLinea *buscar(const char *s);
+    NodoLinea *ptrNodoLinea;
 };
 
 #endif // LISTADELINEA_H
