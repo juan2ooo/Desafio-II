@@ -2,7 +2,7 @@
 
 using namespace std;
 void leerEntrada(const char *&resultado);
-
+short contarCaracteresEnBuffer();
 int main()
 {
     cout << "1. agg linea" << endl;
@@ -10,14 +10,17 @@ int main()
     cout << "3. consultar linea" << endl;
 
     cout << "Seleccione una opcion" << endl;
-    char r;
+    short r;
     cin >> r;
 
     switch (r) {
     case 1:
         cout << "Nombre de la linea: ";
         const char *nombre;
-        cin >> nombre;
+        leerEntrada(nombre);
+        cout << nombre;
+        delete[] nombre;
+
         break;
 
     case 2:
@@ -35,11 +38,18 @@ int main()
 
 
 void leerEntrada(const char *&resultado) {
-    const int MAX_LENGTH = 100;
-    char entrada[MAX_LENGTH];
-    std::cout << "Ingrese una cadena: ";
+    const short MAX_LENGTH = 100;
+    char *entrada = new char[MAX_LENGTH]; // Asignar memoria dinámica
     std::cin.getline(entrada, MAX_LENGTH);
 
     // Almacenar el resultado en una variable const char *
     resultado = entrada;
+}
+
+short contarCaracteresEnBuffer() {
+    std::cin.seekg(0, std::ios::beg);
+    short count = std::cin.gcount();
+    std::cin.clear();
+    //std::cin.seekg(0, std::ios::beg);
+    return count;
 }
