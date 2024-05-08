@@ -77,7 +77,7 @@ NodoEst *ListaDeEstacion::buscarEstacion(const char *nombre){
     return nullptr;
 }
 
-bool ListaDeEstacion::tieneEstacion(Estacion e){
+bool ListaDeEstacion::tieneEstacion(Estacion &e){
     return buscarEstacion(e.nombre) == nullptr;
 }
 

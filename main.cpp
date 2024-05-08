@@ -1,63 +1,45 @@
 #include <iostream>
-#include "ListaDeEstacion.h"
-#include "NodoEst.h"
-#include "Linea.h"
 
 using namespace std;
+void leerEntrada(const char *&resultado);
 
 int main()
 {
-    //cout << "Hello World!" << endl;
-    ListaDeEstacion l;
-    //l.aggEstacion(*new NodoEst("san antonio"),nullptr);
-    //l.aggEstacion(*new NodoEst("parque berrio"),nullptr);
-    //l.aggEstacion(*new NodoEst("prado"),nullptr);
-    //l.aggEstacion(*new NodoEst("hospital"),nullptr);
+    cout << "1. agg linea" << endl;
+    cout << "2. rm linea" << endl;
+    cout << "3. consultar linea" << endl;
 
-    //l.imprimirNombresEstaciones();
+    cout << "Seleccione una opcion" << endl;
+    char r;
+    cin >> r;
 
-    //l.eiminarEstacion("parque berrio1");
+    switch (r) {
+    case 1:
+        cout << "Nombre de la linea: ";
+        const char *nombre;
+        cin >> nombre;
+        break;
 
-    //cout << endl << endl;
-    //l.imprimirNombresEstaciones();
+    case 2:
+        break;
 
+    case 3:
+        break;
 
-    Linea linea("linea a");
-    linea.estaciones.aggEstacion(*new NodoEst("san antonio"),nullptr);
-    linea.estaciones.aggEstacion(*new NodoEst("parque berrio"),nullptr);
-    linea.estaciones.aggEstacion(*new NodoEst("prado"),nullptr);
-    linea.estaciones.aggEstacion(*new NodoEst("hospital"),nullptr);
-
-
-    Linea linea1("linea b");
-    linea1.estaciones.aggEstacion(*new NodoEst("san antonio"),nullptr);
-    linea1.estaciones.aggEstacion(*new NodoEst("exposiciones"),nullptr);
-    linea1.estaciones.aggEstacion(*new NodoEst("tricentenario"),nullptr);
-    linea1.estaciones.aggEstacion(*new NodoEst("udea"),nullptr);
-
-
-    Linea linea2("linea c");
-    linea2.estaciones.aggEstacion(*new NodoEst("niquia"),nullptr);
-    linea2.estaciones.aggEstacion(*new NodoEst("miraflores"),nullptr);
-    linea2.estaciones.aggEstacion(*new NodoEst("san jose"),nullptr);
-    linea2.estaciones.aggEstacion(*new NodoEst("envigado"),nullptr);
-
-    cout << linea.nombre << ":"<< endl;
-    linea.estaciones.imprimirNombresEstaciones();
-
-    cout << endl;
-
-    cout << linea1.nombre << ":"<< endl;
-    linea1.estaciones.imprimirNombresEstaciones();
-
-    cout << endl;
-
-
-    cout << linea2.nombre << ":"<< endl;
-    linea2.estaciones.imprimirNombresEstaciones();
-
-
-
-    //cout << "numero de estaciones: " << l.getNroEstaciones()<<endl;
+    default:
+        cout << "Seleccione una opcion valida";
+        break;
+    }
     return 0;
+}
+
+
+void leerEntrada(const char *&resultado) {
+    const int MAX_LENGTH = 100;
+    char entrada[MAX_LENGTH];
+    std::cout << "Ingrese una cadena: ";
+    std::cin.getline(entrada, MAX_LENGTH);
+
+    // Almacenar el resultado en una variable const char *
+    resultado = entrada;
 }
