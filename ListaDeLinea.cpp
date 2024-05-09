@@ -21,6 +21,9 @@ bool ListaDeLinea::sePuedeEliminar(NodoLinea &l){return l.linea->estaVacia();}
 
 NodoLinea *ListaDeLinea::buscar(const char *s){
     ptrNodoLinea = primerNodoLinea->siguiente;
+    if(ptrNodoLinea == nullptr){
+        return primerNodoLinea;
+    }
     NodoLinea *ant = primerNodoLinea;
     while(ptrNodoLinea != nullptr){
         ptrNodoLinea = ptrNodoLinea ->siguiente;

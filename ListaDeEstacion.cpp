@@ -77,8 +77,8 @@ NodoEst *ListaDeEstacion::buscarEstacion(const char *nombre){
     return nullptr;
 }
 
-bool ListaDeEstacion::tieneEstacion(Estacion &e){
-    return buscarEstacion(e.nombre) == nullptr;
+bool ListaDeEstacion::tieneEstacion(const char *e){
+    return buscarEstacion(e) == nullptr;
 }
 
 void ListaDeEstacion::imprimirNombresEstaciones() {
@@ -179,4 +179,13 @@ void ListaDeEstacion::eiminarEstacion(const char *s){
 
 unsigned short ListaDeEstacion::getNroEstaciones(){
     return nroEstaciones;
+}
+
+
+NodoEst *ListaDeEstacion::getPrimer(){
+    return primerNodoEst;
+}
+
+NodoEst *ListaDeEstacion::getUlt(){
+    return ultimoNodoEst;
 }

@@ -14,12 +14,13 @@ public:
     void aggEstTrasferencia(Linea *l1, const char *estAntes1, Linea *l2, const char *estAntes2);
     const char *nombreEstTransf(const char *nombre, Linea *l1);
     char *redimensionar(char *nombre, short &tam);
+    NodoLinea *buscar(const char *s);
 private:
     NodoLinea *primerNodoLinea;
     static unsigned short nroLinea;
     //void BuscarLinea(char *nombre);
     bool sePuedeEliminar(NodoLinea &l);
-    NodoLinea *buscar(const char *s);
+
     NodoLinea *ptrNodoLinea;
 };
 

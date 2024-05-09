@@ -2,6 +2,7 @@
 
 Linea::Linea(const char *nombreEst) {
     nombre = nombreEst;
+
 }
 
 

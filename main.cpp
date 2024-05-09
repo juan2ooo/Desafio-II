@@ -61,10 +61,101 @@ int main()
         }
         case 3:
             if(l == nullptr){
-                cout << "No hay lineas";
+                cout << "No hay lineas"<<endl<<endl;
+                break;
             }
 
+
+            char a;
+            cout << endl << endl << "Desea realizar operaciones con las linea? (s/n)? "<<endl;
+            cin >> a;
             l->imprimirNombresLineas();
+
+            if(a == 's'){
+                cout << "Ingrese una linea: "<<endl;
+                const char * r;
+                leerEntrada(r);
+                NodoLinea *lineaSeleccionada = l->buscar(r); //memoria dinamica asignada
+
+                if(lineaSeleccionada == nullptr){
+                    cout << "Linea no existe";
+                    break;
+                }
+                bool ban1 = true;
+
+
+                while(ban1){
+                    system("cls");
+                    cout << "1. agg estacion" << endl;
+                    cout << "2. rm estacion" << endl;
+                    cout << "3. consultar estacion" << endl;
+
+                    cout << "Seleccione una opcion" << endl;
+
+                    short i;
+                    cin >> i;
+
+                    switch (i) {
+                        case 1:{
+                        const char *nombre;
+                        system("cls");
+                        cout << "Ingrese el nombre de la estacion: ";
+                        leerEntrada(nombre);
+                        NodoEst *estacionAgg = new NodoEst(nombre);
+                        //si va a ser la primera estacion a agg:
+                        if(lineaSeleccionada ->linea ->estaciones.estaVacia()){
+
+                            //const char *primerEstacion = lineaSeleccionada ->linea->estaciones.getPrimer()->estacion->nombre;
+                            lineaSeleccionada ->linea->estaciones.aggEstacion(*estacionAgg,nullptr);
+                        }else{
+                            const char *antes12;
+                            lineaSeleccionada ->linea->estaciones.imprimirNombresEstaciones();
+                            cout << "Por favor, escriba el nombre de la proxima estacion. Esta estacion se insertara antes de la que ingrese.";
+                            leerEntrada(antes12);
+
+
+                            if(lineaSeleccionada->linea->estaciones.tieneEstacion(antes12)){
+                                cout << "Estacion no existe";
+                                break;
+                            }
+
+
+                            if(antes12 == lineaSeleccionada->linea->estaciones.getPrimer()->estacion->nombre){
+                                //si se inseta al principio
+                                NodoEst *est = new NodoEst(nombre);
+                                float sgte;
+                                cout << "Ingrese el tiempo a la proxima estacion";
+                                cin >> sgte;
+                                est ->estacion ->sgte = sgte;
+                                lineaSeleccionada ->linea->estaciones.aggEstacion(*est,antes12);
+                            }else if(antes12 == lineaSeleccionada->linea->estaciones.getUlt()->estacion->nombre){
+                                //si es al final
+                                NodoEst *est = new NodoEst(nombre);
+                                float ant;
+                                cout << "Ingrese el tiempo a la proxima estacion";
+                                cin >> ant;
+                                est ->estacion ->ant = ant;
+                                lineaSeleccionada ->linea->estaciones.aggEstacion(*est,antes12);
+
+                            }else{
+                                //si es en la mitad de dos estaciones
+                                NodoEst *est = new NodoEst(nombre);
+
+                                lineaSeleccionada ->linea->estaciones.aggEstacion(*est,antes12);
+                            }
+                        }
+
+                        }
+
+                            break;
+                        default:
+                            break;
+                        }
+                    //lineaSeleccionada ->linea ->estaciones;
+                }
+            }
+
+
             break;
 
 
@@ -83,14 +174,13 @@ void leerEntrada(const char *&resultado) {
 
     const short MAX_LENGTH = 100;
     char *entrada = new char[MAX_LENGTH]; // Asignar memoria dinámica
-
+    cin.seekg(0, std::ios::beg);
     cin.ignore();
     cin.getline(entrada, MAX_LENGTH);
 
     // Almacenar el resultado en una variable const char *
-    //cout << &entrada;
     resultado = copiarCadena(entrada);
-    cout << &(*entrada) << endl;
+    //cout << &(*entrada) << endl;
     delete [] entrada;
 }
 
@@ -104,7 +194,7 @@ short contarCaracteresEnBuffer() {
 }
 
 const char* copiarCadena(const char* cadena) {
-    cout << &(*cadena) << endl;
+    //cout << &(*cadena) << endl;
     // Calcular la longitud de la cadena de entrada
     short longitud = contarCaracteresEnBuffer();
 
