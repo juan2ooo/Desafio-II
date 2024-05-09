@@ -63,17 +63,22 @@ NodoEst *ListaDeEstacion::buscarEstacion(const char *nombre){
         return nullptr;
     }
 
-    //NodoEst *anterior = primerNodoEst;
-    ptrNodoEst = primerNodoEst->siguiente;
+    ptrNodoEst = primerNodoEst;
 
-    while(ptrNodoEst != nullptr){
-        if(ptrNodoEst->estacion->nombre == nombre){
+
+    while(ptrNodoEst->siguiente != nullptr){
+        if(sonIguales(ptrNodoEst->estacion->nombre, nombre)){
             return ptrNodoEst;
         }
 
         ptrNodoEst = ptrNodoEst->siguiente;
         //anterior = anterior->siguiente;
     }
+
+    if(sonIguales(ptrNodoEst->estacion->nombre, nombre)){
+        return ptrNodoEst;
+    }
+
     return nullptr;
 }
 

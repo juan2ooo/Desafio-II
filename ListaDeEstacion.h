@@ -3,6 +3,7 @@
 #include <iostream>
 #include "NodoEst.h"
 #include "Estacion.h"
+#include "utilidades.h"
 using namespace std;
 class ListaDeEstacion
 {

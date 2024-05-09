@@ -1,6 +1,7 @@
 #ifndef LISTADELINEA_H
 #define LISTADELINEA_H
 #include "NodoLinea.h"
+#include "utilidades.h"
 
 
 class ListaDeLinea

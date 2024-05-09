@@ -1,10 +1,12 @@
 #include <iostream>
 #include "ListaDeLinea.h"
 //#include <windows.h>
+#include "utilidades.h"
 
 using namespace std;
 void leerEntrada(const char *&resultado);
 const char* copiarCadena(const char* cadena);
+//bool sonIgualesm(const char *cadena1, const char *cadena2);
 
 short contarCaracteresEnBuffer();
 ListaDeLinea *l = nullptr;
@@ -21,6 +23,7 @@ int main()
 
         short r =1;
         cin >> r;
+        cin.ignore();
 
         system("cls");
 
@@ -38,6 +41,7 @@ int main()
             cout << nombre << endl;
 
             l->aggLinea(*new NodoLinea(nombre));
+            system("cls");
 
             //delete[] nombre; //se deberia encargar el destructor
         }
@@ -69,6 +73,8 @@ int main()
             char a;
             cout << endl << endl << "Desea realizar operaciones con las linea? (s/n)? "<<endl;
             cin >> a;
+            cin.ignore();
+            system("cls");
             l->imprimirNombresLineas();
 
             if(a == 's'){
@@ -82,10 +88,9 @@ int main()
                     break;
                 }
                 bool ban1 = true;
-
-
+                system("cls");
                 while(ban1){
-                    system("cls");
+
                     cout << "1. agg estacion" << endl;
                     cout << "2. rm estacion" << endl;
                     cout << "3. consultar estacion" << endl;
@@ -94,6 +99,7 @@ int main()
 
                     short i;
                     cin >> i;
+                    cin.ignore();
 
                     switch (i) {
                         case 1:{
@@ -101,6 +107,7 @@ int main()
                         system("cls");
                         cout << "Ingrese el nombre de la estacion: ";
                         leerEntrada(nombre);
+                        //cin.ignore();
                         NodoEst *estacionAgg = new NodoEst(nombre);
                         //si va a ser la primera estacion a agg:
                         if(lineaSeleccionada ->linea ->estaciones.estaVacia()){
@@ -108,40 +115,45 @@ int main()
                             //const char *primerEstacion = lineaSeleccionada ->linea->estaciones.getPrimer()->estacion->nombre;
                             lineaSeleccionada ->linea->estaciones.aggEstacion(*estacionAgg,nullptr);
                         }else{
-                            const char *antes12;
+                            system("cls");
+
                             lineaSeleccionada ->linea->estaciones.imprimirNombresEstaciones();
-                            cout << "Por favor, escriba el nombre de la proxima estacion. Esta estacion se insertara antes de la que ingrese.";
+                            cout << "Por favor, escriba el nombre de la proxima estacion.\n Esta estacion se insertara antes de la que ingrese o cero para insertar al final: ";
+                            const char *antes12;
+                            //cin.ignore();
                             leerEntrada(antes12);
-
-
                             if(lineaSeleccionada->linea->estaciones.tieneEstacion(antes12)){
                                 cout << "Estacion no existe";
                                 break;
                             }
 
-
-                            if(antes12 == lineaSeleccionada->linea->estaciones.getPrimer()->estacion->nombre){
+                            if(sonIguales(antes12,lineaSeleccionada->linea->estaciones.getPrimer()->estacion->nombre)){
                                 //si se inseta al principio
                                 NodoEst *est = new NodoEst(nombre);
                                 float sgte;
-                                cout << "Ingrese el tiempo a la proxima estacion";
+                                cout << "Ingrese el tiempo a la proxima estacion: ";
                                 cin >> sgte;
+                                cin.ignore();
                                 est ->estacion ->sgte = sgte;
                                 lineaSeleccionada ->linea->estaciones.aggEstacion(*est,antes12);
-                            }else if(antes12 == lineaSeleccionada->linea->estaciones.getUlt()->estacion->nombre){
+                                cout << "estacion agg correctamente" << endl << endl;
+                            }else if(sonIguales(antes12, "0")){
                                 //si es al final
                                 NodoEst *est = new NodoEst(nombre);
                                 float ant;
                                 cout << "Ingrese el tiempo a la proxima estacion";
                                 cin >> ant;
+                                cin.ignore();
                                 est ->estacion ->ant = ant;
                                 lineaSeleccionada ->linea->estaciones.aggEstacion(*est,antes12);
+                                cout << "estacion agg correctamente" << endl << endl;
 
                             }else{
                                 //si es en la mitad de dos estaciones
                                 NodoEst *est = new NodoEst(nombre);
 
                                 lineaSeleccionada ->linea->estaciones.aggEstacion(*est,antes12);
+                                cout << "estacion agg correctamente" << endl << endl;
                             }
                         }
 
@@ -173,14 +185,12 @@ int main()
 void leerEntrada(const char *&resultado) {
 
     const short MAX_LENGTH = 100;
-    char *entrada = new char[MAX_LENGTH]; // Asignar memoria dinámica
-    cin.seekg(0, std::ios::beg);
-    cin.ignore();
+    char *entrada = new char[MAX_LENGTH];
+
     cin.getline(entrada, MAX_LENGTH);
 
-    // Almacenar el resultado en una variable const char *
     resultado = copiarCadena(entrada);
-    //cout << &(*entrada) << endl;
+
     delete [] entrada;
 }
 
@@ -208,3 +218,4 @@ const char* copiarCadena(const char* cadena) {
     //delete[] cadena;
     return copia;
 }
+

@@ -1,5 +1,5 @@
 #include "ListaDeLinea.h"
-
+bool sonIguales(const char *cadena1, const char *cadena2);
 ListaDeLinea::ListaDeLinea() {
 
     primerNodoLinea = nullptr;
@@ -20,17 +20,19 @@ void ListaDeLinea::aggLinea(NodoLinea &l) { //este metodo inseta datos al final
 bool ListaDeLinea::sePuedeEliminar(NodoLinea &l){return l.linea->estaVacia();}
 
 NodoLinea *ListaDeLinea::buscar(const char *s){
-    ptrNodoLinea = primerNodoLinea->siguiente;
-    if(ptrNodoLinea == nullptr){
-        return primerNodoLinea;
-    }
-    NodoLinea *ant = primerNodoLinea;
-    while(ptrNodoLinea != nullptr){
-        ptrNodoLinea = ptrNodoLinea ->siguiente;
-        ant = ant->siguiente;
-        if(ptrNodoLinea->linea->nombre == s){
-            return ant;
+    ptrNodoLinea = primerNodoLinea;
+
+    //NodoLinea *ant = primerNodoLinea;
+    while(ptrNodoLinea ->siguiente != nullptr){
+
+        if(sonIguales( ptrNodoLinea->linea->nombre, s)){
+            return ptrNodoLinea;
         }
+        ptrNodoLinea = ptrNodoLinea ->siguiente;
+    }
+
+    if(sonIguales( ptrNodoLinea->linea->nombre, s)){
+        return ptrNodoLinea;
     }
     return nullptr;
 }
@@ -142,5 +144,6 @@ char *ListaDeLinea::redimensionar(char *nombre, short &tam){
 
     return nombreRedimension;
 }
+
 
 
