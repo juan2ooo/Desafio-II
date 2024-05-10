@@ -15,7 +15,7 @@ public:
 
     //metodos
     void aggEstacion(NodoEst &est,const char *nombreAntes); //solo ajusta los tiempor cuando se ingresan a estaciones intermedias
-    void eiminarEstacion(const char *s);
+    void eliminarEstacion(const char *s);
     bool tieneEstacion(const char *e);
     void imprimirNombresEstaciones();
     bool estaVacia();
@@ -23,6 +23,8 @@ public:
     NodoEst *buscarEstacion(const char *nombre);
     NodoEst *getPrimer();
     NodoEst *getUlt();
+    static unsigned short getNroEst();
+    float calcularTiempoEst(const char* est1, const char *est2);
 
 
 private:

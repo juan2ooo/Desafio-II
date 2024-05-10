@@ -1,4 +1,6 @@
 #include "ListaDeLinea.h"
+unsigned short ListaDeLinea::nroLinea = 0;
+
 bool sonIguales(const char *cadena1, const char *cadena2);
 ListaDeLinea::ListaDeLinea() {
 
@@ -11,9 +13,11 @@ void ListaDeLinea::aggLinea(NodoLinea &l) { //este metodo inseta datos al final
     if (primerNodoLinea == nullptr) { //si esta vacio
         primerNodoLinea = &l;
         l.siguiente = nullptr;
+        nroLinea++;
     } else {
         l.siguiente = primerNodoLinea;
         primerNodoLinea = &l;
+        nroLinea++;
     }
 }
 
@@ -48,24 +52,26 @@ void ListaDeLinea::eliminarLinea(const char *l){ // elimina al siguiente de este
     if(sonIguales(primerNodoLinea->linea->nombre,l)){
         NodoLinea *temp = primerNodoLinea;
         primerNodoLinea = primerNodoLinea->siguiente;
-
         delete temp;
+        nroLinea--;
         return;
     }
 
 
     NodoLinea *nodoEliminarAnt = buscarAnt(l); //ANTERIOR o nullptr si es el ultimo
 
+    if(nodoEliminarAnt == nullptr){
+        cout << "no pertenece"<<endl<<endl;
+        return;
+    }
 
     if(sePuedeEliminar(*nodoEliminarAnt->siguiente)){
 
-        if(nodoEliminarAnt == nullptr){
-            cout << "no pertenece";
-            return;
-        }
+
         NodoLinea *temp = nodoEliminarAnt ->siguiente;
         nodoEliminarAnt->siguiente = nodoEliminarAnt->siguiente->siguiente;
         delete (temp);
+        nroLinea--;
 
 
     }else{
@@ -183,12 +189,24 @@ NodoLinea *ListaDeLinea::buscarAnt(const char *s){
         ant = ant ->siguiente;
     }
 
-    //if(sonIguales(ptrNodoLinea->linea->nombre, s)){
+    if(sonIguales(ant->linea->nombre, s)){
         return ant;
+    }
 
     return nullptr;
 }
 
-short ListaDeLinea::getNrolineas(){
+unsigned short ListaDeLinea::getNrolineas(){
     return nroLinea;
+}
+
+
+float ListaDeLinea::calculoTiempoLlegada(){
+    NodoLinea *actual = primerNodoLinea;
+    float tiempo = 0;
+    while (actual != nullptr) {
+        tiempo = actual ->linea->estaciones.calcularTiempoEst();
+    }
+    return tiempo;
+
 }

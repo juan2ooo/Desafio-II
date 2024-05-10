@@ -17,7 +17,8 @@ public:
     const char *nombreEstTransf(const char *nombre, Linea *l1);
     char *redimensionar(char *nombre, short &tam);
     NodoLinea *buscar(const char *s);
-    static short getNrolineas();
+    static unsigned short getNrolineas();
+    float calculoTiempoLlegada(const char* est1, const char *est2);
 private:
     NodoLinea *primerNodoLinea;
     static unsigned short nroLinea;

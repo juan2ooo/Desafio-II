@@ -1,7 +1,8 @@
 #include <iostream>
 #include "ListaDeLinea.h"
-//#include <windows.h>
+#include "Tiempo.h"
 #include "utilidades.h"
+
 
 using namespace std;
 void leerEntrada(const char *&resultado);
@@ -9,15 +10,19 @@ const char* copiarCadena(const char* cadena);
 //bool sonIgualesm(const char *cadena1, const char *cadena2);
 
 short contarCaracteresEnBuffer();
-ListaDeLinea *l = nullptr;
+ListaDeLinea *l = new ListaDeLinea();
 int main()
 {
     bool ban = 1;
     while (ban) {
 
+        //l = new ListaDeLinea();
+
+
         cout << "1. agg linea" << endl;
         cout << "2. rm linea" << endl;
-        cout << "3. consultar linea" << endl;
+        cout << "3. consultar linea" << endl<<endl;
+        cout << "Cantidad de lineas: " <<  l->getNrolineas()<< endl<< endl;
 
         cout << "Seleccione una opcion: ";
 
@@ -30,10 +35,6 @@ int main()
         switch (r) {
         case 1:
         {
-
-            if (l == nullptr){
-                l = new ListaDeLinea();
-            }
 
 
             cout << "Nombre de la linea: ";
@@ -57,12 +58,10 @@ int main()
 
         case 2:
         {
-            if (l == nullptr){
-                l = new ListaDeLinea();
-            }
+
 
             if(l->getNrolineas() == 0){
-                cout << "No hay estaciones para eliminar";
+                cout << "No hay estaciones para eliminar"<<endl <<endl;
                 continue;
             }
 
@@ -75,8 +74,8 @@ int main()
             cout << nombre << endl;
 
             //ListaDeLinea l;
-            NodoLinea *nodoEliminar = l ->buscar(nombre);
-            l->eliminarLinea(nodoEliminar->linea->nombre);
+            //NodoLinea *nodoEliminar = l ->buscar(nombre);
+            l->eliminarLinea(nombre);
             int a;
             break;
         }
@@ -110,13 +109,16 @@ int main()
                 system("cls");
                 while(ban1){
 
-                    cout << "estacion seleccionada: " << lineaSeleccionada->linea->nombre<<endl;
+                    cout << "Linea seleccionada: " << lineaSeleccionada->linea->nombre<<endl;
 
                     cout << "1. agg estacion" << endl;
                     cout << "2. rm estacion" << endl;
                     cout << "3. consultar estacion" << endl;
+                    cout << "4. Tiempo estimado de llegada";
+                    cout << "Numero de estaciones: " << lineaSeleccionada ->linea->estaciones.getNroEstaciones();
+                    cout << endl << endl;
 
-                    cout << "Seleccione una opcion: ";
+                    cout << "Seleccione una opcion (0 para salir): ";
 
                     short i;
                     cin >> i;
@@ -129,6 +131,12 @@ int main()
                         cout << "Ingrese el nombre de la estacion: ";
                         leerEntrada(nombre);
                         //cin.ignore();
+
+                        if(lineaSeleccionada->linea->estaciones.tieneEstacion(nombre)){
+                            cout << "Estacion ya existe" << endl;
+                            continue;
+                        }
+
                         NodoEst *estacionAgg = new NodoEst(nombre);
                         //si va a ser la primera estacion a agg:
                         if(lineaSeleccionada ->linea ->estaciones.estaVacia()){
@@ -143,12 +151,13 @@ int main()
 
                             cout <<endl;
                             cout << "Estacion a agragar: " << nombre << " <---> ?" <<endl<<endl;
-                            cout << "Por favor, escriba el nombre de su proxima estacion.\nNota:Esta estacion se insertara antes de la que ingrese o cero para insertar al final\n"<<"Ingrese una opcion: ";
+                            cout << "Por favor, escriba el nombre de una estacion ya existente, esta sera la proxima estacion de la que quiere agg"<<endl;
+                            cout << "Nota:Esta estacion se insertara antes de la que ingrese o cero para insertar al final\n\n" << "Ingrese una opcion:";
                             const char *antes12;
                             //cin.ignore();
                             leerEntrada(antes12);
                             if(!sonIguales(antes12,"0")){
-                                if(lineaSeleccionada->linea->estaciones.tieneEstacion(antes12)){
+                                if(!lineaSeleccionada->linea->estaciones.tieneEstacion(antes12)){
                                     cout << "Estacion no existe"<<endl;
                                     break;
                                 }
@@ -158,7 +167,7 @@ int main()
                                 //si se inseta al principio
                                 NodoEst *est = new NodoEst(nombre);
                                 float sgte;
-                                cout << "Ingrese el tiempo a la proxima estacion: ";
+                                cout << endl << "Ingrese el tiempo a la proxima estacion: ";
                                 cin >> sgte;
                                 cin.ignore();
                                 est ->estacion ->sgte = sgte;
@@ -188,13 +197,66 @@ int main()
 
                         }
 
+
+                        case 2:{
+                            lineaSeleccionada->linea->estaciones.imprimirNombresEstaciones();
+                            cout << endl << endl;
+                            cout << "Ingrese el nombre de la estacion a eliminar: " <<endl;
+                            const char *nombre;
+                            leerEntrada(nombre);
+                            NodoEst *estEliminar = lineaSeleccionada->linea->estaciones.buscarEstacion(nombre);
+
+                            if(estEliminar == nullptr){
+                                cout <<"No existe esa estacion"<<endl<<endl;
+                                break;
+                            }
+
+                            lineaSeleccionada->linea->estaciones.eliminarEstacion(nombre);
+                            cout << "Estacion eliminada con exito"<<endl <<endl;
+                            break;
+                        }
+
                         case 3:{
-                            cout << endl << "Mapa estaciones: " << endl;
+                            cout << endl << "Mapa estaciones: " << endl<<endl;
                             lineaSeleccionada->linea->estaciones.imprimirNombresEstaciones();
                             cout << endl << endl;
                             break;
                         }
+
+
+                        case 4:{
+                            int h,m,s;
+                            cout <<"Ingrese hora: ";
+                            cin >> h;
+                            cin.ignore();
+
+                            cout << endl << "Ingrese minutos: ";
+                            cin >> m;
+                            cin.ignore();
+
+                            cout << endl << "Ingrese segundos: ";
+                            cin >> s;
+                            cin.ignore();
+                            cout << endl<<endl;
+                            Tiempo *t = new Tiempo(h,m,s);
+
+                            const char *est1;
+                            cout << "ingrese est1: ";
+                            leerEntrada(est1);
+
+
+                            const char *est2;
+                            cout << "ingrese est2: ";
+                            leerEntrada(est2);
+
+                            float tiempo = lineaSeleccionada ->linea->estaciones.calcularTiempoEst(est1,est2);
+                            t->horaDeLlegada(tiempo);
+                            cout << endl<<endl;
+                            break;
+
+                        }
                         default:
+                            if(i == '0')ban1=false;
                             break;
                         }
                     //lineaSeleccionada ->linea ->estaciones;

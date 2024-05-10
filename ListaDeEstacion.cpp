@@ -37,6 +37,8 @@ void ListaDeEstacion::aggEstacion(NodoEst &est, const char *nombreAntes){ //est 
         ultimoNodoEst ->siguiente = p;
 
         ultimoNodoEst = p;
+
+        ultimoNodoEst ->anterior->estacion->sgte = ultimoNodoEst->estacion->ant;
         nroEstaciones ++;
         return;
     }
@@ -59,7 +61,7 @@ void ListaDeEstacion::aggEstacion(NodoEst &est, const char *nombreAntes){ //est 
 
 NodoEst *ListaDeEstacion::buscarEstacion(const char *nombre){
     if(primerNodoEst == nullptr){
-        cout << "No se encontro, Linea sin estaciones"<< endl;
+        //cout << "No se encontro, Linea sin estaciones"<< endl;
         return nullptr;
     }
 
@@ -83,7 +85,7 @@ NodoEst *ListaDeEstacion::buscarEstacion(const char *nombre){
 }
 
 bool ListaDeEstacion::tieneEstacion(const char *e){
-    return buscarEstacion(e) == nullptr;
+    return buscarEstacion(e) != nullptr;
 }
 
 void ListaDeEstacion::imprimirNombresEstaciones() {
@@ -92,10 +94,13 @@ void ListaDeEstacion::imprimirNombresEstaciones() {
         return;
     }
     NodoEst *temp = primerNodoEst;
+
+
     while (temp != nullptr) {
         // Imprimir el nombre de la estación
         //cout << temp->estacion->nombre << "----" << temp ->estacion ->sgte << "----";
-        cout << temp->estacion->nombre << endl << "|"<<endl << temp->estacion->sgte<<endl<<"|";
+        float tiempo = temp->estacion->sgte;
+        cout << temp->estacion->nombre << endl << "  |  "<<endl <<"  " << tiempo <<endl<<"  |  "<<endl;
         // Moverse al siguiente nodo
         temp = temp->siguiente;
     }
@@ -144,15 +149,24 @@ void ListaDeEstacion::reajustarTiempos(Estacion *e1, Estacion *e2, bool caso){  
 }
 
 
-void ListaDeEstacion::eiminarEstacion(const char *s){
+void ListaDeEstacion::eliminarEstacion(const char *s){
 
     if(primerNodoEst == nullptr){ //si esta vacia
         cout << "Elemento invalido, lista vacia";
         return;
     }
 
+    if(primerNodoEst == ultimoNodoEst){
+        NodoEst *temp = primerNodoEst;
+        ultimoNodoEst = nullptr;
+        primerNodoEst = nullptr;
+        delete temp;
+        return;
+    }
 
-    if(primerNodoEst->estacion ->nombre == s){ //si es al principio
+
+    if(sonIguales(primerNodoEst->estacion ->nombre, s)){ //si es al principio
+        //NodoEst *temp = primerNodoEst;
         primerNodoEst = primerNodoEst ->siguiente;
         delete (primerNodoEst ->anterior);
         primerNodoEst -> anterior = nullptr;
@@ -161,7 +175,7 @@ void ListaDeEstacion::eiminarEstacion(const char *s){
     }
 
 
-    if(ultimoNodoEst ->estacion ->nombre == s){ //si es al final
+    if(sonIguales(ultimoNodoEst ->estacion ->nombre,s)){ //si es al final
         ultimoNodoEst = ultimoNodoEst ->anterior;
         delete (ultimoNodoEst ->siguiente);
         ultimoNodoEst ->siguiente = nullptr;
@@ -196,4 +210,30 @@ NodoEst *ListaDeEstacion::getPrimer(){
 
 NodoEst *ListaDeEstacion::getUlt(){
     return ultimoNodoEst;
+}
+
+
+unsigned short ListaDeEstacion::getNroEst(){
+    return nroEstaciones;
+}
+
+
+float ListaDeEstacion::calcularTiempoEst(const char* est1, const char *est2){
+    if(primerNodoEst == nullptr){
+        cout << "No hau datos en la lista" <<endl;
+        return 0;
+    }
+    NodoEst *actual = buscarEstacion(est1);
+    NodoEst *final = buscarEstacion(est2);
+    float tiempo = 0;
+
+
+    if(actual == nullptr || final == nullptr)return 0;
+
+    while (actual != final) {
+        // Imprimir el nombre de la estación
+        //cout << temp->estacion->nombre << "----" << temp ->estacion ->sgte << "----";
+        tiempo = tiempo + actual->estacion->sgte;
+    }
+    return tiempo;
 }

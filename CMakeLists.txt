@@ -14,7 +14,8 @@ add_executable(Desafio2 main.cpp
     ListaDeLinea.h ListaDeLinea.cpp
     Red.h Red.cpp
     utilidades.h
-    utilidades.cpp)
+    utilidades.cpp
+    Tiempo.h Tiempo.cpp)
 
 include(GNUInstallDirs)
 install(TARGETS Desafio2
