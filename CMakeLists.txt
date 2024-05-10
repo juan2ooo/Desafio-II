@@ -12,7 +12,7 @@ add_executable(Desafio2 main.cpp
     NodoEst.h NodoEst.cpp
     Estacion.h Estacion.cpp
     ListaDeLinea.h ListaDeLinea.cpp
-    Red.h Red.cpp
+
     utilidades.h
     utilidades.cpp
     Tiempo.h Tiempo.cpp)

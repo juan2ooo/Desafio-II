@@ -11,8 +11,7 @@ class ListaDeEstacion
 public:
     //atributos
     NodoEst *prtNodoEst;
-    ListaDeEstacion();
-    ~ListaDeEstacion();
+
 
     //metodos
     void aggEstacion(NodoEst &est,const char *nombreAntes); //solo ajusta los tiempor cuando se ingresan a estaciones intermedias
@@ -26,6 +25,8 @@ public:
     NodoEst *getUlt();
     static unsigned short getNroEst();
     float calcularTiempoEst(const char* est1, const char *est2);
+    ListaDeEstacion();
+    ~ListaDeEstacion();
 
 
 private:
