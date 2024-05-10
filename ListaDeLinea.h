@@ -13,12 +13,12 @@ public:
     void eliminarLinea(const char *l);
     bool petenece(const char *l);
     void imprimirNombresLineas();
-    void aggEstTrasferencia(Linea *l1, const char *estAntes1, Linea *l2, const char *estAntes2);
+    void aggEstTrasferencia(Linea *l1, NodoEst *est1, Linea *l2, NodoEst *est2,const char *nuevoNombre);
     const char *nombreEstTransf(const char *nombre, Linea *l1);
     char *redimensionar(char *nombre, short &tam);
     NodoLinea *buscar(const char *s);
     static unsigned short getNrolineas();
-    float calculoTiempoLlegada(const char* est1, const char *est2);
+    float calculoEst();
 private:
     NodoLinea *primerNodoLinea;
     static unsigned short nroLinea;

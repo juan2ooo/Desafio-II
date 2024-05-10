@@ -100,9 +100,22 @@ void ListaDeEstacion::imprimirNombresEstaciones() {
         // Imprimir el nombre de la estación
         //cout << temp->estacion->nombre << "----" << temp ->estacion ->sgte << "----";
         float tiempo = temp->estacion->sgte;
-        cout << temp->estacion->nombre << endl << "  |  "<<endl <<"  " << tiempo <<endl<<"  |  "<<endl;
-        // Moverse al siguiente nodo
+
+        cout << "ESTACION: "<< temp->estacion->nombre << endl << "  |  "<<endl<< "  |  "<<endl<< "  |  "<<endl;
+        if(tiempo != 0){
+            cout << endl<<endl;
+            Tiempo::imprimirTiempo(tiempo);
+            cout << endl<<endl;
+        }else{
+            cout <<"fin";
+        }
+
+        cout <<endl << "  |  "<<endl<< "  |  "<<endl<< "  |  "<<endl;
+            // Moverse al siguiente nodo
+
+
         temp = temp->siguiente;
+
     }
 }
 
@@ -234,6 +247,10 @@ float ListaDeEstacion::calcularTiempoEst(const char* est1, const char *est2){
         // Imprimir el nombre de la estación
         //cout << temp->estacion->nombre << "----" << temp ->estacion ->sgte << "----";
         tiempo = tiempo + actual->estacion->sgte;
+        actual = actual ->siguiente;
     }
     return tiempo;
 }
+
+
+

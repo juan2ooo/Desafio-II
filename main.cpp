@@ -21,8 +21,11 @@ int main()
 
         cout << "1. agg linea" << endl;
         cout << "2. rm linea" << endl;
-        cout << "3. consultar linea" << endl<<endl;
+        cout << "3. consultar linea" << endl;
+        cout << "4. agg est de trasferencia" << endl;
+        cout << "5. Cantidad de estaciones: "<<endl<<endl;
         cout << "Cantidad de lineas: " <<  l->getNrolineas()<< endl<< endl;
+
 
         cout << "Seleccione una opcion: ";
 
@@ -79,7 +82,7 @@ int main()
             int a;
             break;
         }
-        case 3:
+        case 3:{
             if(l == nullptr){
                 cout << "No hay lineas"<<endl<<endl;
                 break;
@@ -114,7 +117,7 @@ int main()
                     cout << "1. agg estacion" << endl;
                     cout << "2. rm estacion" << endl;
                     cout << "3. consultar estacion" << endl;
-                    cout << "4. Tiempo estimado de llegada";
+                    cout << "4. Tiempo estimado de llegada"<<endl;
                     cout << "Numero de estaciones: " << lineaSeleccionada ->linea->estaciones.getNroEstaciones();
                     cout << endl << endl;
 
@@ -126,6 +129,7 @@ int main()
 
                     switch (i) {
                         case 1:{
+
                         const char *nombre;
                         system("cls");
                         cout << "Ingrese el nombre de la estacion: ";
@@ -240,6 +244,11 @@ int main()
                             cout << endl<<endl;
                             Tiempo *t = new Tiempo(h,m,s);
 
+
+                            cout << "Mapa de estaciones: "<<endl;
+                            lineaSeleccionada->linea->estaciones.imprimirNombresEstaciones();
+
+                            cout << endl<<endl;
                             const char *est1;
                             cout << "ingrese est1: ";
                             leerEntrada(est1);
@@ -255,9 +264,11 @@ int main()
                             break;
 
                         }
+
                         default:
-                            if(i == '0')ban1=false;
-                            break;
+                            if(i == 0)ban1=false;
+                            continue;
+                            //break;
                         }
                     //lineaSeleccionada ->linea ->estaciones;
                 }
@@ -265,15 +276,105 @@ int main()
 
 
             break;
+        }
 
+        case 4:{
+
+            if(l->getNrolineas() == 0){
+                cout << "no hay lineas"<<endl<<endl;
+                continue;
+            }
+            cout << "Estaciones disponibles:"<<endl<<endl;
+            l->imprimirNombresLineas();
+            const char *linea1;
+            const char *linea2;
+            cout << "Ingrese linea 1: ";
+            leerEntrada(linea1);
+            cout << endl;
+
+            cout << "Ingrese linea 2: ";
+            leerEntrada(linea2);
+
+            if (sonIguales(linea2,linea1)){
+                cout << "No se puede hacer trasferencia consigo mismo"<<endl<<endl;
+                continue;
+            }
+
+
+            NodoLinea *l1 = l->buscar(linea1);
+            if(l1 == nullptr){
+                cout << "no existe"<<endl<<endl;
+                delete[] linea1;
+                continue;
+            }
+
+            if(l1->linea->estaciones.getNroEstaciones() == 0){
+                cout << "No hay estaciones porfavor agrege"<<endl<<endl;
+                continue;
+            }
+
+            cout<<endl<<endl<<"mapa de estaciones de " << l1->linea->nombre << endl;
+            l1->linea->estaciones.imprimirNombresEstaciones();
+            cout<<endl<<endl;
+
+            const char *est1;
+            cout << "Ingrese una estacion: ";
+            leerEntrada(est1);
+            NodoEst *ptrEst1 = l1->linea->estaciones.buscarEstacion(est1);
+
+            if(ptrEst1 == nullptr){
+                cout << "no existe estacion"<<endl;
+                continue;
+            }
+
+            cout << endl<<endl;
+
+
+            //ahora para 2
+
+            NodoLinea *l2 = l->buscar(linea2);
+            if(l2 == nullptr){
+                cout << "no existe"<<endl;
+                delete[] linea2;
+                continue;
+            }
+            if(l2->linea->estaciones.getNroEstaciones() == 0){
+                cout << "No hay estaciones porfavor agrege";
+                continue;
+            }
+
+            cout<<endl<<endl<<"mapa de estaciones de " << l1->linea->nombre << endl;
+            l2->linea->estaciones.imprimirNombresEstaciones();
+            cout<<endl<<endl;
+
+            const char *est2;
+            cout << "Ingrese una estacion: ";
+            leerEntrada(est2);
+            NodoEst *ptrEst2 = l2->linea->estaciones.buscarEstacion(est2);
+
+            if(ptrEst2 == nullptr){
+                cout << "no existe estacion"<<endl;
+                continue;
+            }
+            cout<<endl<<"Ingrese nuevo nombre en comun para la estacion de trasferencia: ";
+            const char *nuevo;
+            leerEntrada(nuevo);
+
+            l->aggEstTrasferencia(l1->linea,ptrEst1,l2->linea,ptrEst2,nuevo);
+
+            cout <<endl << "Cambios realizados con exito, consulte nuevamente estaciones"<<endl<<endl;
+            break;
+        }
+        case 5:{
+            cout << "Cantidad de est: " <<  l->calculoEst()<< endl<< endl;
+            break;
+        }
 
         default:
             cout << "SALIENDO...";
             ban = false;
             break;
         }
-        //return 0;
-
     }
 }
 

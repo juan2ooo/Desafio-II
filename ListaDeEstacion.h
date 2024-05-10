@@ -4,6 +4,7 @@
 #include "NodoEst.h"
 #include "Estacion.h"
 #include "utilidades.h"
+#include "Tiempo.h"
 using namespace std;
 class ListaDeEstacion
 {

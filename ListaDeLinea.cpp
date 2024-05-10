@@ -94,7 +94,7 @@ void ListaDeLinea::imprimirNombresLineas() {
 }
 
 
-void ListaDeLinea::aggEstTrasferencia(Linea *l1, const char *est1, Linea *l2, const char *est2){
+void ListaDeLinea::aggEstTrasferencia(Linea *l1, NodoEst *est1, Linea *l2, NodoEst *est2, const char *nuevoNombre){
 
     //una vez con los nombres
     if(l1 ->estaVacia() | l2 ->estaVacia()){
@@ -102,14 +102,17 @@ void ListaDeLinea::aggEstTrasferencia(Linea *l1, const char *est1, Linea *l2, co
         return;
     }
 
-    const char *nombreL1 = nombreEstTransf(est1,l1);
-    const char *nombreL2 = nombreEstTransf(est2,l2);
+    const char *nombreL1 = nombreEstTransf(nuevoNombre,l1);
+    const char *nombreL2 = nombreEstTransf(nuevoNombre,l2);
 
-    l1 ->estaciones.buscarEstacion(est1)->estacion->nombre = nombreL1;
-    l2 ->estaciones.buscarEstacion(est2)->estacion->nombre = nombreL2;
+    const char *anterior1 = est1->estacion->nombre;
+    const char *anterior2 = est2->estacion->nombre;
 
-    delete[] nombreL1;
-    delete[] nombreL2;
+    est1->estacion->nombre = nombreL1;
+    est2->estacion->nombre = nombreL2;
+
+    delete[] anterior1;
+    delete[] anterior2;
 }
 
 
@@ -201,12 +204,12 @@ unsigned short ListaDeLinea::getNrolineas(){
 }
 
 
-float ListaDeLinea::calculoTiempoLlegada(){
+float ListaDeLinea::calculoEst(){
     NodoLinea *actual = primerNodoLinea;
-    float tiempo = 0;
+    short n = 0;
     while (actual != nullptr) {
-        tiempo = actual ->linea->estaciones.calcularTiempoEst();
+        n = n+actual->linea->estaciones.getNroEstaciones(); // Suponiendo que el atributo se llama 'nombre'
+        actual = actual->siguiente;
     }
-    return tiempo;
-
+    return n;
 }

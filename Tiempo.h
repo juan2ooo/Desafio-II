@@ -14,6 +14,7 @@ public:
     // Constructor que obligatoriamente recibe hora, minuto y segundo
     Tiempo(int h, int m, int s);
     void horaDeLlegada( float horas);
+    static void imprimirTiempo(float horasDecimal);
 
 };
 
