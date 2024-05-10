@@ -19,7 +19,7 @@ void ListaDeEstacion::aggEstacion(NodoEst &est, const char *nombreAntes){ //est 
         return;
     }
 
-    if(primerNodoEst->estacion->nombre == nombreAntes){ //si es al principio
+    if(sonIguales(primerNodoEst->estacion->nombre, nombreAntes)){ //si es al principio
         NodoEst *p = &est;
         p ->siguiente = primerNodoEst;        
         p ->anterior = nullptr;
@@ -95,7 +95,7 @@ void ListaDeEstacion::imprimirNombresEstaciones() {
     while (temp != nullptr) {
         // Imprimir el nombre de la estación
         //cout << temp->estacion->nombre << "----" << temp ->estacion ->sgte << "----";
-        cout << temp->estacion->nombre << endl;
+        cout << temp->estacion->nombre << endl << "|"<<endl << temp->estacion->sgte<<endl<<"|";
         // Moverse al siguiente nodo
         temp = temp->siguiente;
     }
@@ -156,6 +156,7 @@ void ListaDeEstacion::eiminarEstacion(const char *s){
         primerNodoEst = primerNodoEst ->siguiente;
         delete (primerNodoEst ->anterior);
         primerNodoEst -> anterior = nullptr;
+        nroEstaciones --;
         return;
     }
 
@@ -164,6 +165,7 @@ void ListaDeEstacion::eiminarEstacion(const char *s){
         ultimoNodoEst = ultimoNodoEst ->anterior;
         delete (ultimoNodoEst ->siguiente);
         ultimoNodoEst ->siguiente = nullptr;
+        nroEstaciones--;
         return;
     }
 
@@ -178,6 +180,7 @@ void ListaDeEstacion::eiminarEstacion(const char *s){
     reajustarTiempos(est ->anterior->estacion,est->siguiente->estacion,false);
 
     delete est;
+    nroEstaciones--;
 
 }
 

@@ -20,6 +20,8 @@ void ListaDeLinea::aggLinea(NodoLinea &l) { //este metodo inseta datos al final
 bool ListaDeLinea::sePuedeEliminar(NodoLinea &l){return l.linea->estaVacia();}
 
 NodoLinea *ListaDeLinea::buscar(const char *s){
+
+    if(primerNodoLinea == nullptr) return nullptr;
     ptrNodoLinea = primerNodoLinea;
 
     //NodoLinea *ant = primerNodoLinea;
@@ -37,26 +39,43 @@ NodoLinea *ListaDeLinea::buscar(const char *s){
     return nullptr;
 }
 
-void ListaDeLinea::eliminarLinea(NodoLinea &l){ // elimina al siguiente de este
+void ListaDeLinea::eliminarLinea(const char *l){ // elimina al siguiente de este
     if(primerNodoLinea == nullptr){
         cout << "no se puede eliminar, lista vacia" << endl;
+        return;
     }
-    if(sePuedeEliminar(l)){
 
-        if(&l == primerNodoLinea){ //si es el primer nodo
-            delete &l;
-        }else{
-            l.siguiente = l.siguiente->siguiente;
-            delete (l.siguiente);
+    if(sonIguales(primerNodoLinea->linea->nombre,l)){
+        NodoLinea *temp = primerNodoLinea;
+        primerNodoLinea = primerNodoLinea->siguiente;
+
+        delete temp;
+        return;
+    }
+
+
+    NodoLinea *nodoEliminarAnt = buscarAnt(l); //ANTERIOR o nullptr si es el ultimo
+
+
+    if(sePuedeEliminar(*nodoEliminarAnt->siguiente)){
+
+        if(nodoEliminarAnt == nullptr){
+            cout << "no pertenece";
+            return;
         }
+        NodoLinea *temp = nodoEliminarAnt ->siguiente;
+        nodoEliminarAnt->siguiente = nodoEliminarAnt->siguiente->siguiente;
+        delete (temp);
+
 
     }else{
         cout << "No se completo la operacion, no se puede eliminar lineas con estaciones"<<endl;
     }
 }
 
-bool ListaDeLinea::petenece(Linea &l){
-    return (buscar(l.nombre) == nullptr);
+bool ListaDeLinea::petenece(const char *l){
+    if(primerNodoLinea == nullptr) return false;
+    return (buscar(l) != nullptr);
 }
 
 
@@ -146,4 +165,30 @@ char *ListaDeLinea::redimensionar(char *nombre, short &tam){
 }
 
 
+NodoLinea *ListaDeLinea::buscarAnt(const char *s){
 
+    if(primerNodoLinea == nullptr) return nullptr;
+
+    //if(sonIguales(primerNodoLinea ->linea->nombre,s))return nullptr;
+
+    ptrNodoLinea = primerNodoLinea ->siguiente;
+    NodoLinea *ant = primerNodoLinea;
+
+    //NodoLinea *ant = primerNodoLinea;
+    while(ptrNodoLinea!= nullptr){
+        if(sonIguales( ptrNodoLinea->linea->nombre, s)){
+            return ant;
+        }
+        ptrNodoLinea = ptrNodoLinea ->siguiente;
+        ant = ant ->siguiente;
+    }
+
+    //if(sonIguales(ptrNodoLinea->linea->nombre, s)){
+        return ant;
+
+    return nullptr;
+}
+
+short ListaDeLinea::getNrolineas(){
+    return nroLinea;
+}

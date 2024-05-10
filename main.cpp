@@ -19,7 +19,7 @@ int main()
         cout << "2. rm linea" << endl;
         cout << "3. consultar linea" << endl;
 
-        cout << "Seleccione una opcion" << endl;
+        cout << "Seleccione una opcion: ";
 
         short r =1;
         cin >> r;
@@ -34,14 +34,22 @@ int main()
             if (l == nullptr){
                 l = new ListaDeLinea();
             }
+
+
             cout << "Nombre de la linea: ";
             const char *nombre;
 
             leerEntrada(nombre);
-            cout << nombre << endl;
+
+            if(l->petenece(nombre)){
+                cout << "esa linea ya existe"<<endl<<endl;
+                break;
+            }
+
+            //cout << nombre << endl;
 
             l->aggLinea(*new NodoLinea(nombre));
-            system("cls");
+            cout << "Estacion agg con exito" <<endl << endl;
 
             //delete[] nombre; //se deberia encargar el destructor
         }
@@ -52,6 +60,14 @@ int main()
             if (l == nullptr){
                 l = new ListaDeLinea();
             }
+
+            if(l->getNrolineas() == 0){
+                cout << "No hay estaciones para eliminar";
+                continue;
+            }
+
+            l->imprimirNombresLineas();
+            cout <<endl<<endl;
             cout << "Nombre de la linea: ";
             const char *nombre;
 
@@ -59,7 +75,8 @@ int main()
             cout << nombre << endl;
 
             //ListaDeLinea l;
-            l->eliminarLinea(*new NodoLinea(nombre));
+            NodoLinea *nodoEliminar = l ->buscar(nombre);
+            l->eliminarLinea(nodoEliminar->linea->nombre);
             int a;
             break;
         }
@@ -75,7 +92,9 @@ int main()
             cin >> a;
             cin.ignore();
             system("cls");
+            cout << "Estaciones disponibles: " << endl;
             l->imprimirNombresLineas();
+            cout << endl << endl;
 
             if(a == 's'){
                 cout << "Ingrese una linea: "<<endl;
@@ -84,18 +103,20 @@ int main()
                 NodoLinea *lineaSeleccionada = l->buscar(r); //memoria dinamica asignada
 
                 if(lineaSeleccionada == nullptr){
-                    cout << "Linea no existe";
+                    cout << "Linea no existe"<<endl << endl;
                     break;
                 }
                 bool ban1 = true;
                 system("cls");
                 while(ban1){
 
+                    cout << "estacion seleccionada: " << lineaSeleccionada->linea->nombre<<endl;
+
                     cout << "1. agg estacion" << endl;
                     cout << "2. rm estacion" << endl;
                     cout << "3. consultar estacion" << endl;
 
-                    cout << "Seleccione una opcion" << endl;
+                    cout << "Seleccione una opcion: ";
 
                     short i;
                     cin >> i;
@@ -114,17 +135,23 @@ int main()
 
                             //const char *primerEstacion = lineaSeleccionada ->linea->estaciones.getPrimer()->estacion->nombre;
                             lineaSeleccionada ->linea->estaciones.aggEstacion(*estacionAgg,nullptr);
+                            cout << "estacion agg correctamente" << endl << endl;
                         }else{
                             system("cls");
-
+                            cout << "mapa de estaciones:" <<endl<<endl;
                             lineaSeleccionada ->linea->estaciones.imprimirNombresEstaciones();
-                            cout << "Por favor, escriba el nombre de la proxima estacion.\n Esta estacion se insertara antes de la que ingrese o cero para insertar al final: ";
+
+                            cout <<endl;
+                            cout << "Estacion a agragar: " << nombre << " <---> ?" <<endl<<endl;
+                            cout << "Por favor, escriba el nombre de su proxima estacion.\nNota:Esta estacion se insertara antes de la que ingrese o cero para insertar al final\n"<<"Ingrese una opcion: ";
                             const char *antes12;
                             //cin.ignore();
                             leerEntrada(antes12);
-                            if(lineaSeleccionada->linea->estaciones.tieneEstacion(antes12)){
-                                cout << "Estacion no existe";
-                                break;
+                            if(!sonIguales(antes12,"0")){
+                                if(lineaSeleccionada->linea->estaciones.tieneEstacion(antes12)){
+                                    cout << "Estacion no existe"<<endl;
+                                    break;
+                                }
                             }
 
                             if(sonIguales(antes12,lineaSeleccionada->linea->estaciones.getPrimer()->estacion->nombre)){
@@ -141,11 +168,11 @@ int main()
                                 //si es al final
                                 NodoEst *est = new NodoEst(nombre);
                                 float ant;
-                                cout << "Ingrese el tiempo a la proxima estacion";
+                                cout << "Ingrese el tiempo a la estacion anterior: ";
                                 cin >> ant;
                                 cin.ignore();
                                 est ->estacion ->ant = ant;
-                                lineaSeleccionada ->linea->estaciones.aggEstacion(*est,antes12);
+                                lineaSeleccionada ->linea->estaciones.aggEstacion(*est,nullptr);
                                 cout << "estacion agg correctamente" << endl << endl;
 
                             }else{
@@ -157,9 +184,16 @@ int main()
                             }
                         }
 
+                            break;
+
                         }
 
+                        case 3:{
+                            cout << endl << "Mapa estaciones: " << endl;
+                            lineaSeleccionada->linea->estaciones.imprimirNombresEstaciones();
+                            cout << endl << endl;
                             break;
+                        }
                         default:
                             break;
                         }
